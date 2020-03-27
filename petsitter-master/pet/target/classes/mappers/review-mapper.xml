@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.bu.mappers.review-mapper">
+
+	<select id="reviewlist" resultType="Review">
+		select rvId, rvIntro, rvDate, rvScore, psId, review.uId, user.uName
+		from review, user
+		where psId = #{psId} and user.uId = review.uId;
+	</select>
+	
+	<select id="reviewcount" resultType="int">
+		select count(*) from review where psId = #{psId}
+	</select>
+	
+	<insert id="reviewwrite">
+		insert into review (rvIntro, rvDate, rvScore, psId, uId)
+		values(#{rvIntro}, NOW(), #{rvScore}, #{psId}, #{uId})
+	</insert>
+</mapper>

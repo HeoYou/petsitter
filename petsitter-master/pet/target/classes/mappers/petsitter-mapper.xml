@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.bu.mappers.petsitter-mapper">
+
+
+	<insert id="petsitterjoin">
+		insert into petsitter (psIntro, psAddress, psSPrice,
+		psMPrice, psLPrice,
+		psOption1, psOption2, psOption3, psOption4,
+		psOption5,
+		psOption6, psOption7, psOption8, psOption9, psOption10,
+		psOption11, psOption12, psOption13, uId, psflag)
+		values(#{psIntro},
+		#{psAddress}, #{psSPrice}, #{psMPrice},
+		#{psLPrice},
+		#{psOption1},
+		#{psOption2}, #{psOption3}, #{psOption4},
+		#{psOption5},
+		#{psOption6},
+		#{psOption7}, #{psOption8}, #{psOption9}, #{psOption10},
+		#{psOption11}, #{psOption12}, #{psOption13}, #{uId}, 0)
+
+	</insert>
+	<insert id="petsitterpicture">
+		insert into image (imgId, imgAdd, uid)
+		values(
+		#{imgId}, #{imgId}, #{uId})
+
+	</insert>
+	<select id="petsitterlist" resultType="PetsitterList">
+		select psId, psIntro,
+		psAddress, user.uName, sittinCount from petsitter, user where
+		petsitter.uId =
+		user.uId
+	</select>
+
+	<select id="petsitter" resultType="Petsitter">
+		select * from petsitter where
+		psid = #{psId}
+	</select>
+
+	<!-- <select id="petsearch" resultType="Petsitter"> select * from petsitter 
+		where psOption10 = #{psOption10} </select> -->
+
+	<select id="petsearch" resultType="PetsitterList">
+		select psId, psIntro,
+		psAddress, user.uName, sittinCount from petsitter, user where
+		petsitter.uId = user.uId
+		and psOption13 = #{psOption10}
+	</select>
+
+	<select id="petsearchname" resultType="PetsitterList">
+		select psId, psIntro,
+		psAddress, user.uName, sittinCount from petsitter, user where
+		petsitter.uId =
+		user.uId and user.uName LIKE CONCAT('%',#{sName},'%');
+	</select>
+
+	<select id="searchimage" resultType="String">
+select max(imgId) from image group by uId having uId = (
+select uId from user where uName like CONCAT('%',#{sName},'%'));
+	</select>
+
+	<select id="petsearchaddress" resultType="PetsitterList">
+		select psId, psIntro,
+		psAddress, user.uName, sittinCount from petsitter, user where
+		petsitter.uId =
+ user.uId and psAddress LIKE CONCAT('%',#{sAddress},'%')
+	</select>
+
+	<select id="searchimage2" resultType="String">
+select max(imgId) from image group by uId having uId = (
+select uId from petsitter where psAddress like CONCAT('%',#{sAddress},'%'));
+	</select>
+
+	<select id="petsearchprice" resultType="PetsitterList">
+		select psId, psIntro,
+		psAddress, user.uName, sittinCount from petsitter, user where
+		petsitter.uId =
+		user.uId and #{sPrice} between #{minPrice} and #{maxPrice}
+	</select>
+
+	<select id="petsittername" resultType="String">
+		select uName from user
+		where user.uId = (
+		select petsitter.uId from petsitter where psId =
+		#{psId})
+	</select>
+
+	<select id="petsitterimage" resultType="String">
+		select imgId from image
+		where uId = (
+		select uId from petsitter where psId = #{psId})
+	</select>
+
+	<update id="count">
+		update petsitter set sittinCount=sittinCount +1 where
+		psId=#{psId}
+	</update>
+
+
+   <select id="complete" resultType="int">
+      select count(*) from reservation where rStatus=2 AND psId=#{psId}
+   </select>
+   
+   <select id="image" resultType="String">
+		select max(imgId) from image group by uId; 
+   </select>
+
+</mapper>

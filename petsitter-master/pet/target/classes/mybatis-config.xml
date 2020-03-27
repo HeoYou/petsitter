@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+
+<configuration>
+
+	<typeAliases>		
+
+		<typeAlias alias="User" type="kr.ac.bu.domain.User"/>
+		<typeAlias alias="User2" type="kr.ac.bu.domain.User2"/>
+		<typeAlias alias="Reservation" type="kr.ac.bu.domain.Reservation"/>
+		<typeAlias alias="Petsitter" type="kr.ac.bu.domain.Petsitter"/>
+		<typeAlias alias="PetsitterList" type="kr.ac.bu.domain.PetSitterList"/>
+		<typeAlias alias="Petsearch" type="kr.ac.bu.domain.Petsearch"/>
+		<typeAlias alias="Article" type="kr.ac.bu.domain.Article"/>
+		<typeAlias alias="ArticleList" type="kr.ac.bu.domain.ArticleList"/>
+		<typeAlias alias="Review" type="kr.ac.bu.domain.Review"/>
+
+	
+
+	</typeAliases>
+
+</configuration>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.bu.mappers.reservation-mapper">
+
+	<select id="rsvInfoName" resultType="String">
+		select uName from user where uId =
+		(select uId from petsitter where psId =
+		(select psid from reservation where rId = #{rId}))
+	</select>
+
+	<!-- <select id="rsvInfo" resultType="RsvInfo"> -->
+	<!-- select * from reservation where rId = #{rId} -->
+	<!-- </select> -->
+ 
+	<insert id="reservation">
+		insert into reservation (rSdate, rEdate, rStation,
+		rPrice, psId, uId)
+		values(#{rSdate}, #{rEdate}, #{rStation}, #{rPrice},
+		#{psId}, #{uId})
+	</insert>
+	<select id="rsvlist" resultType="Reservation">
+		select r.rId, r.rSdate, r.rEdate, r.rStation,r.rPrice, r.psId, r.uId, u.uname 
+		from user as u, reservation as r
+        where r.uId = #{uId} And 
+			r.psId in 
+			(select p.psId
+            from petsitter as p 
+            where p.uId in 
+				(select u.uId 
+                from user 
+                ));  
+ 
+	</select>
+
+	<select id="psreservation" resultType="Reservation">
+		select * from reservation
+		where psId in
+		(select psId from petsitter where uId = #{uId});
+	</select>
+	
+	<select id="reservationdetail" resultType="Reservation">
+		select rId, rSdate, rEdate, rPrice, user.uname, psId, reservation.uId 
+		from user, reservation where rid = #{rid} and user.uId = 
+		(select reservation.uId from reservation where rid = #{rId});
+	</select>
+	<select id="reservationpsname" resultType="String">
+		select user.uName from user where user.uId = (
+		select petsitter.uId from petsitter where petsitter.psId =(
+		select reservation.psId from reservation where rId = #{rId}));
+	</select>
+	<select id="username" resultType="String">
+		select user.uName from reservation, user where user.uId = reservation.uId AND reservation.psId = (select psId from petsitter where uId=#{uId})
+	</select>
+	<update id="accept">
+		update reservation set rStatus = 1 where rId = #{rId}
+	</update>
+	<update id="deny">
+		update reservation set rStatus = 3 where rId = #{rId}
+	</update>
+	<update id="success">
+		update reservation set rStatus = 2 where rId = #{rId}
+	</update>
+
+</mapper>

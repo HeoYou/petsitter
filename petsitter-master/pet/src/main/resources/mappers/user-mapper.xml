@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.bu.mappers.user-mapper">
+
+	<insert id="join">
+		insert into user (uid, upw, uname, uphone, uaddress)
+		values(	#{uId}, #{uPw}, #{uName}, #{uPhone}, #{uAddress}) 
+	
+	</insert>
+	
+	<insert id="sitterJoin">
+		insert into petsitter (psIntro, psaddress, psprice)
+		values(	#{psIntro}, #{psAddress}, #{psPrice}) 
+	
+	</insert>
+	
+	<select id="login" resultType="User">
+		select uId, uPw, uName, uPhone, uAddress from user where uId = #{uId}
+	</select>
+	
+	<select id="petsitter" resultType="Petsitter">
+		select * from petsitter where uId = #{uId}
+	</select>
+	
+	<update id="sittermodify">
+		update petsitter set psIntro = #{psIntro}, psAddress = #{psAddress},
+		psSPrice = #{psSPrice}, psMPrice = #{psMPrice}, psMPrice = #{psMPrice},
+		psOption1 = #{psOption1}, psOption2 = #{psOption2}, psOption3 = #{psOption3}, 
+		psOption4 = #{psOption4}, psOption5 = #{psOption5}, psOption6 = #{psOption6}, 
+		psOption7 = #{psOption7}, psOption8 = #{psOption8}, psOption9 = #{psOption9}, 
+		psOption10 = #{psOption10}
+		where uId = #{uId}
+	</update>
+	
+	<select id="checkid" resultType="int">
+		select count(*) from user where uId = #{uId}
+	</select>
+
+	<delete id="deleteimage">
+		delete from image where uId = #{uId}
+	</delete>
+	<select id="userinfo" resultType="User2">
+		select * from user where uId = #{uId}
+	</select>
+</mapper>

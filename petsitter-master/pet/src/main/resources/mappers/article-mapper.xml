@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.bu.mappers.article-mapper">
+
+
+	<select id="articleList" resultType="ArticleList">
+		select articleId,
+		articleTitle, articleDate, uName, articleCount from article, user
+		where article.uId = user.uId
+		order by articleId desc
+	</select>
+
+	<insert id="insert">
+		insert into article(articleTitle, uId, articleInfo,
+		articleDate, articleCount) values(#{articleTitle},#{uId},
+		#{articleInfo}, NOW(),0)
+
+	</insert>
+
+	<select id="detail" resultType="Article">
+		select articleId, articleTitle,
+		articleDate, uName, articleCount, articleInfo, article.uId from
+		article,user
+		where articleId=#{articleId} AND article.uId = user.uId
+	</select>
+
+	<select id="userdetail" resultType="Article">
+		select user.uId, uName,
+		uPhone, uAddress from article,user
+		where articleId=#{articleId} AND
+		article.uId = user.uId
+	</select>
+
+	<update id="modify">
+		update article set articleTitle=#{articleTitle},
+		articleInfo=#{articleInfo} where articleId=#{articleId}
+	</update>
+
+	<delete id="delete">
+		delete from article where articleId =#{articleId};
+	</delete>
+
+	<update id="count">
+		update article set articleCount=articleCount +1 where
+		articleId=#{articleId}
+	</update>
+
+	<select id="comments" resultType="Comments">
+		select cmtId,articleId,
+		comments.uId, comment, cmtDate, user.uName from comments, user
+		where
+		comments.uId = user.uId AND articleId=#{articleId}
+		order by articleId asc
+	</select>
+
+	<insert id="cmtRegist">
+		insert into Comments(articleId,uId,
+		comment, cmtDate) values(#{articleId},#{uId},#{comment},NOW())
+	</insert>
+	
+	<delete id="cmtRemove">
+		delete from comments where cmtId =#{cmtId};
+	</delete>
+</mapper>
