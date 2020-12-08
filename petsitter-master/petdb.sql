@@ -1,10 +1,10 @@
 create database petdb;
 use petdb;
 drop table IF EXISTS User;
-drop table IF EXISTS petsitter;
-drop table IF EXISTS reservation;
+drop table IF EXISTS Petsitter;
+drop table IF EXISTS Reservation;
 drop table IF EXISTS Image;
-drop table IF EXISTS review;
+drop table IF EXISTS Review;
 
 
 create table User(
