@@ -80,7 +80,7 @@ create table review(
     rvIntro text,
     rvDate date,
     rvScore int default 5,
-    psId varchar(20) not null,
+    psId int not null,
     uId varchar(20) not null,
     primary key(rvId),
     foreign key(psId) references petsitter(psId),
