@@ -1,24 +1,24 @@
 create database petdb;
 use petdb;
-drop table IF EXISTS User;
-drop table IF EXISTS Petsitter;
-drop table IF EXISTS Reservation;
-drop table IF EXISTS Image;
-drop table IF EXISTS Review;
+drop table IF EXISTS user;
+drop table IF EXISTS petsitter;
+drop table IF EXISTS reservation;
+drop table IF EXISTS image;
+drop table IF EXISTS review;
 
 
-create table User(
-	uId varchar(20) Not Null,
+create table user(
+    uId varchar(20) Not Null,
     uName varchar(20) not null,
-	uPhone varchar(20) not null, 
+    uPhone varchar(20) not null, 
     uAddress varchar(50) not null,
-	uPw varchar(20) not null,
-	uProfile varchar(30),
+    uPw varchar(20) not null,
+    uProfile varchar(30),
     primary key(uId)
     );
 
 create table petsitter(
-	psId int not null auto_increment,
+    psId int not null auto_increment,
     psIntro text,
     psAddress varchar(20),
     psSPrice int, psMPrice int, psLPrice int,
@@ -35,7 +35,7 @@ create table petsitter(
     psOption11 boolean, -- 샴푸
     psOption12 boolean, -- 약/영양제
     psOption13 boolean,
-    psflag varchar(5), 
+    psFlag varchar(5), 
     uId varchar(20),
     sittinCount int default 0,
     primary key(psId),
@@ -50,7 +50,7 @@ create table reservation(
 	rId int not null auto_increment,
 	rSdate date not null,
     rEdate date not null,
-    rstation varchar(20), 
+    rStation varchar(20), 
     rPrice int,
     rOption varchar(20),
     psId int,
@@ -67,7 +67,7 @@ create table reservation(
     
     select * from reservation;
     
-create table Image(
+create table image(
 	imgId varchar(30) not null,
     imgAdd varchar(30) not null,
     uId varchar(20) not null,
