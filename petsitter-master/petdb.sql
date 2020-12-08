@@ -40,11 +40,10 @@ create table petsitter(
     sittinCount int default 0,
     primary key(psId),
     unique index(uId),
-    foreign key(uId) references User(uId)
+    foreign key(uId) references user(uId)
    # foreign key(psImage) references Image(imgId)
     );
-    insert into petsitter (psIntro, psAddress, psSprice, uId) values("ㅎㅇㅎㅇ", "충남", 5000, "1234");
-	select * from petsitter;
+
     
 create table reservation(
 	rId int not null auto_increment,
@@ -58,21 +57,15 @@ create table reservation(
     rStatus int DEFAULT 0,
     primary key(rId),
     foreign key(psId) references petsitter(psId),
-    foreign key(uId) references User(uId)
+    foreign key(uId) references user(uId)
     );
-    insert into reservation (rSdate, rEdate, psId, uId) values("2019-09-29", "2019-09-30",1,4321);
-    select uName from user where uId = 
-    (select uId from petsitter where psId = 
-    (select psid from reservation where rId = 1));
-    
-    select * from reservation;
     
 create table image(
 	imgId varchar(30) not null,
     imgAdd varchar(30) not null,
     uId varchar(20) not null,
     primary key(imgId),
-    foreign key(uId) references User(uId)
+    foreign key(uId) references user(uId)
     );
     
 create table review(
@@ -84,7 +77,7 @@ create table review(
     uId varchar(20) not null,
     primary key(rvId),
     foreign key(psId) references petsitter(psId),
-    foreign key(uId) references User(uId)
+    foreign key(uId) references user(uId)
     );
     
 create table article(
@@ -106,21 +99,12 @@ create table article(
 );
 
 create table comments(
-cmtId int not null auto_increment,
-articleId int not null,
-uId varchar(20) not null,
-comment varchar(140) not null,
-cmtDate date,
-primary key(cmtId),
-foreign key(uId) references user(uId),
-foreign key(articleId) references article(articleId)
+	cmtId int not null auto_increment,
+	articleId int not null,
+	uId varchar(20) not null,
+	comment varchar(140) not null,
+	cmtDate date,
+	primary key(cmtId),
+	foreign key(uId) references user(uId),
+	foreign key(articleId) references article(articleId)
 );
-
-
-
-
-
-insert into admin (uId, uPw, uName) values('admin', '1234', 'admin');
-
-
-select * from user;
